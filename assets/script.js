@@ -66,27 +66,28 @@ for (let i = 0; i < slides.length; i++) {
 	dotsContainer.appendChild(nouvelleDiv);
 }
 
-function setActiveDot(index) {
+function setActiveDot(currentIndex) {
 	// retirer la classe active de tous les dots
 	const dotDiv = document.querySelectorAll('.dot');
 	dotDiv.forEach(dot => dot.classList.remove('dot_selected'));
 	// ajouter la classe active au dot correspondant
-	if (dotDiv[index]) {
-		dotDiv[index].classList.add('dot_selected');
+	if (dotDiv[currentIndex]) {
+		dotDiv[currentIndex].classList.add('dot_selected');
 	}
 }
 
+// màj images et textes dans bannerImage selon currentIndex
 function updateCarousel() {
-    if (bannerImage && bannerText) {
+    // if (bannerImage && bannerText) {
         bannerImage.src = slides[currentIndex].image;
         // console.log("Image source:", slides[currentIndex].image);
         bannerText.innerHTML = slides[currentIndex].tagLine;
 		// console.log("Texte changé à:", slides[currentIndex].tagLine);
         setActiveDot(currentIndex); 
-	} 
-	else {
-		console.error("Élément image ou texte non trouvé")
-	}	
+	// } 
+	// else {
+	// 	console.error("Élément image ou texte non trouvé")
+	// }	
 }	
 
 
