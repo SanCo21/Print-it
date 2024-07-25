@@ -22,100 +22,67 @@ let currentIndex = 0;
 const dotsContainer = document.querySelector('.dots');
 const bannerImage = document.querySelector('.banner-img');
 const bannerText = document.querySelector('#banner p');
-
-// Vérifiez que les éléments HTML existent
-
-// if (!bannerImage) {
-// 	console.error("Élément image non trouvé");
-// } else {
-// 	console.log("Élément image trouvé");
-// }
-
-// if (!bannerText) {
-// 	console.error("Élément texte non trouvé");
-// } else {
-// 	console.log("Élément texte trouvé");
-// }
-
-// if (!dotsContainer) {
-// 	console.error("Conteneur de points non trouvé");
-// } else {
-// 	console.log("Conteneur de points trouvé");
-// }
-
-// ***** Counter for the elements in the slides array *****
-
-// let countSlides = slides.length;
-// console.log(countSlides);
-
-
-// ****** Loop with counter *****
-
-// let countSlides = 0
-// for (let i = 0; i < slides.length; i++) {
-// 	countSlides++;
-// 	console.log('Images: ${slides[i]}, Compteur: ${countSlides}');}
+const arrowLeft = document.getElementById("arrowLeft");
+const arrowRight = document.getElementById("arrowRight");
 
 
 // ***** Counter with loop to add dots *****
 
 for (let i = 0; i < slides.length; i++) {
-	// countSlides++;
-	const nouvelleDiv = document.createElement('div');
-	nouvelleDiv.classList.add('dot');
-	dotsContainer.appendChild(nouvelleDiv);
+	const newDiv = document.createElement('div');
+	newDiv.classList.add('dot');
+	dotsContainer.appendChild(newDiv);
+
+	// Add a click event listener to each dot to make it clickable
+	newDiv.addEventListener('click', function() {
+		// If the index of the dot (i) is not equal to the current active slide index
+		if (i !== currentIndex) {
+			// Remove the current active dot class
+			document.querySelector('.dot_selected').classList.remove('dot_selected');
+			// Add the active class to the selected dot
+			newDiv.classList.add('dot_selected');
+			// Update the current slide
+			currentIndex = i;
+			updateCarousel();
+		}
+	});
 }
 
 function setActiveDot(currentIndex) {
-	// retirer la classe active de tous les dots
+	// Remove the active class from all dots
 	const dotDiv = document.querySelectorAll('.dot');
 	dotDiv.forEach(dot => dot.classList.remove('dot_selected'));
-	// ajouter la classe active au dot correspondant
+	// Add the active class to the corresponding dot
 	if (dotDiv[currentIndex]) {
 		dotDiv[currentIndex].classList.add('dot_selected');
 	}
 }
 
-// màj images et textes dans bannerImage selon currentIndex
-function updateCarousel() {
-    // if (bannerImage && bannerText) {
-        bannerImage.src = slides[currentIndex].image;
-        // console.log("Image source:", slides[currentIndex].image);
-        bannerText.innerHTML = slides[currentIndex].tagLine;
-		// console.log("Texte changé à:", slides[currentIndex].tagLine);
-        setActiveDot(currentIndex); 
-	// } 
-	// else {
-	// 	console.error("Élément image ou texte non trouvé")
-	// }	
+// update of images and texts in bannerImage according to currentIndex
+function updateCarousel() {    
+        bannerImage.src = slides[currentIndex].image;        
+        bannerText.innerHTML = slides[currentIndex].tagLine;		
+        setActiveDot(currentIndex); 	
 }	
 
-
-// màj de currentIndex pour rester dans les limites du nombre de diapos.
-// avec retour première diapo si clic flèche droite sur dernière diapo et vice-versa
-
+// update of currentIndex to stay within the limits of the number of slides
+// with return to the first slide if click on the right arrow on the last slide and vice-versa
 function slideChange(direction) {
 	currentIndex = (currentIndex + direction + slides.length) % slides.length;
-	console.log("Index actuel:", currentIndex);
 	setActiveDot(currentIndex);
 	updateCarousel();
 }
 
 // ***** EventListener for the arrows *****
 	
-let arrowLeft = document.getElementById("arrowLeft");
 arrowLeft.addEventListener("click", function() {
-	console.log("Clic sur la flèche gauche")
 	slideChange(-1);
 });
 
-let arrowRight = document.getElementById("arrowRight");
 arrowRight.addEventListener("click", function() {
-	console.log("Clic sur la flèche droite")
 	slideChange(+1);
 });
 
-
-// Initialiser le carrousel avec la première image et le premier point actif
+// Initialize the carousel with the first image and the first active dot
 updateCarousel();
 setActiveDot(currentIndex);
