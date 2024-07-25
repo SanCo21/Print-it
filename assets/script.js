@@ -22,8 +22,8 @@ let currentIndex = 0;
 const dotsContainer = document.querySelector('.dots');
 const bannerImage = document.querySelector('.banner-img');
 const bannerText = document.querySelector('#banner p');
-const arrowLeft = document.getElementById("arrowLeft");
-const arrowRight = document.getElementById("arrowRight");
+const arrowLeft = document.querySelector('.arrow_left');
+const arrowRight = document.querySelector('.arrow_right');
 
 
 // ***** Counter with loop to add dots *****
